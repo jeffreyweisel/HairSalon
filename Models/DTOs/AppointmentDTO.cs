@@ -13,9 +13,22 @@ public class AppointmentDTO
     public CustomerDTO Customer { get; set; }
     
     public DateTime? AppointmentTime { get; set; }
-    
-    public int ServiceId { get; set; }
-    public ServiceDTO Service { get; set; }
-   
+    public List<AppointmentServiceDTO> Services { get; set; }
+     public decimal? AppointmentPrice
+    {
+        get
+        {
+            if (Services != null && Services.Any())
+            {
+                // Calculate the total price by summing the prices of all services
+                decimal totalPrice = Services.Sum(service => service.Service.Price);
+                return totalPrice;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
    
 }

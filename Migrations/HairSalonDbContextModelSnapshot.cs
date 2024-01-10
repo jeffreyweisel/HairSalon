@@ -36,9 +36,6 @@ namespace HairSalon.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("StylistId")
                         .HasColumnType("integer");
 
@@ -46,11 +43,106 @@ namespace HairSalon.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ServiceId");
-
                     b.HasIndex("StylistId");
 
                     b.ToTable("Appointments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppointmentTime = new DateTime(2024, 1, 12, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerId = 2,
+                            StylistId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AppointmentTime = new DateTime(2024, 1, 11, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerId = 1,
+                            StylistId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AppointmentTime = new DateTime(2024, 1, 13, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerId = 4,
+                            StylistId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AppointmentTime = new DateTime(2024, 1, 12, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerId = 3,
+                            StylistId = 4
+                        });
+                });
+
+            modelBuilder.Entity("Salon.Models.AppointmentService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("AppointmentServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppointmentId = 1,
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AppointmentId = 1,
+                            ServiceId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AppointmentId = 2,
+                            ServiceId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AppointmentId = 3,
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AppointmentId = 4,
+                            ServiceId = 4
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AppointmentId = 3,
+                            ServiceId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AppointmentId = 4,
+                            ServiceId = 2
+                        });
                 });
 
             modelBuilder.Entity("Salon.Models.Customer", b =>
@@ -152,6 +244,9 @@ namespace HairSalon.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.ToTable("Services");
@@ -160,27 +255,32 @@ namespace HairSalon.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Haircut"
+                            Name = "Haircut",
+                            Price = 24.99m
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Beard Trim"
+                            Name = "Beard Trim",
+                            Price = 19.99m
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Hair Color"
+                            Name = "Hair Color",
+                            Price = 49.99m
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Perm"
+                            Name = "Perm",
+                            Price = 69.99m
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Hair Extensions"
+                            Name = "Hair Extensions",
+                            Price = 99.99m
                         });
                 });
 
@@ -271,12 +371,6 @@ namespace HairSalon.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Salon.Models.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Salon.Models.Stylist", "Stylist")
                         .WithMany("Appointments")
                         .HasForeignKey("StylistId")
@@ -285,9 +379,31 @@ namespace HairSalon.Migrations
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Service");
-
                     b.Navigation("Stylist");
+                });
+
+            modelBuilder.Entity("Salon.Models.AppointmentService", b =>
+                {
+                    b.HasOne("Salon.Models.Appointment", "Appointment")
+                        .WithMany("Services")
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Salon.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Salon.Models.Appointment", b =>
+                {
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("Salon.Models.Customer", b =>

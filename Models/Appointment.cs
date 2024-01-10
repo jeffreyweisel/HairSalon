@@ -16,8 +16,8 @@ public class Appointment
     [Required]
     public DateTime? AppointmentTime { get; set; }
     [Required]
-    public int ServiceId { get; set; }
-    public Service Service { get; set; }
+   
+    public List<AppointmentService> Services { get; set; }
    
    
 }
