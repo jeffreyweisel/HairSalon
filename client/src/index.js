@@ -10,6 +10,8 @@ import CustomerList from './components/tickets/CustomerList';
 import CustomerDetails from './components/tickets/CustomerDetails';
 import AppointmentList from './components/tickets/AppointmentList';
 import ServiceList from './components/tickets/ServiceList';
+import AddStylistForm from './components/tickets/AddStylistForm';
+import AddCustomerForm from './components/tickets/AddCustomerForm';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,10 +21,12 @@ root.render(
         <Route path="stylists">
           <Route index element={<StylistList />} />
           <Route path=":id" element={<StylistDetails />} />
+          <Route path='create' element={< AddStylistForm />} />
         </Route>
         <Route path="customers">
           <Route index element={<CustomerList />} />
           <Route path=":id" element={<CustomerDetails />} />
+          <Route path="create" element={< AddCustomerForm />} />
         </Route>
         <Route path="appointments">
           <Route index element={<AppointmentList />} />

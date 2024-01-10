@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getStylist } from "../../data/stylistData";
 
 export default function StylistDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [stylist, setStylist] = useState(null);
 
   useEffect(() => {

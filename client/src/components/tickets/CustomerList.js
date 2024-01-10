@@ -13,9 +13,14 @@ export default function CustomerList() {
 
   return (
     <div className="container">
-      <div className="sub-menu bg-light">
+      <div className="sub-menu bg-light d-flex">
+      <div>
         <h4>Customers</h4>
       </div>
+      <Link to="/customers/create" className="ml-2">
+        Add
+      </Link>
+    </div>
       {customers.map((customer) => (
         <Card key={`customer-${customer.id}`} className="mb-3">
           <CardBody>

@@ -131,6 +131,7 @@ app.MapPost("/api/stylists", (HairSalonDbContext db, Stylist newStylist) =>
 {
     try
     {
+        newStylist.IsActive = true;
         db.Stylists.Add(newStylist);
         db.SaveChanges();
         return Results.Created($"/stylists/{newStylist.Id}", newStylist);
