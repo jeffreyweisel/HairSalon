@@ -15,5 +15,5 @@ public class StylistDTO
     public string Address { get; set; }
     
     public bool IsActive { get; set; }
-    public List<Appointment> Appointments { get; set; }
+    public List<AppointmentDTO> Appointments { get; set; }
 }

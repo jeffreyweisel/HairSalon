@@ -3,13 +3,40 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import StylistList from './components/tickets/StylistList';
+import StylistDetails from './components/tickets/StylistDetails';
+import CustomerList from './components/tickets/CustomerList';
+import CustomerDetails from './components/tickets/CustomerDetails';
+import AppointmentList from './components/tickets/AppointmentList';
+import ServiceList from './components/tickets/ServiceList';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route path="stylists">
+          <Route index element={<StylistList />} />
+          <Route path=":id" element={<StylistDetails />} />
+        </Route>
+        <Route path="customers">
+          <Route index element={<CustomerList />} />
+          <Route path=":id" element={<CustomerDetails />} />
+        </Route>
+        <Route path="appointments">
+          <Route index element={<AppointmentList />} />
+          
+        </Route>
+        <Route path="services">
+          <Route index element={<ServiceList />} />
+          
+        </Route>
+      </Route>
+    </Routes>
+  </BrowserRouter>
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

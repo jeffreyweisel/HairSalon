@@ -14,5 +14,5 @@ public class CustomerDTO
    
     public string Address { get; set; }
     
-    public List<Appointment> Appointments { get; set; }
+    public List<AppointmentDTO> Appointments { get; set; }
 }
