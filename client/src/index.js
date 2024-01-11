@@ -12,6 +12,8 @@ import AppointmentList from './components/tickets/AppointmentList';
 import ServiceList from './components/tickets/ServiceList';
 import AddStylistForm from './components/tickets/AddStylistForm';
 import AddCustomerForm from './components/tickets/AddCustomerForm';
+import AppointmentDetails from './components/tickets/AppointmentDetails';
+import AddAppointmentForm  from './components/tickets/AddAppointmentForm';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -30,7 +32,8 @@ root.render(
         </Route>
         <Route path="appointments">
           <Route index element={<AppointmentList />} />
-          
+          <Route path=":id" element={<AppointmentDetails />} />
+          <Route path="create" element={< AddAppointmentForm />} />
         </Route>
         <Route path="services">
           <Route index element={<ServiceList />} />

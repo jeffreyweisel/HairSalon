@@ -363,8 +363,8 @@ app.MapPost("/api/appointments", (HairSalonDbContext db, Appointment newAppointm
 
     try
     {
-        newAppointment.AppointmentTime = DateTime.Now.AddDays(10);
-
+       
+    //    newAppointment.AppointmentTime = DateTime.Now.AddDays(10);
         db.Appointments.Add(newAppointment);
         db.SaveChanges();
         return Results.Created($"/appointments/{newAppointment.Id}", newAppointment);
@@ -435,6 +435,20 @@ app.MapGet("/api/services", (HairSalonDbContext db) =>
         Price = c.Price,
         
     }).ToList();
+});
+
+// Delete an appointment
+app.MapDelete("/api/appointments/{id}", (HairSalonDbContext db, int id) =>
+{
+    Appointment appointment = db.Appointments.SingleOrDefault(a => a.Id == id);
+    if (appointment == null)
+    {
+        return Results.NotFound();
+    }
+    db.Appointments.Remove(appointment);
+    db.SaveChanges();
+    return Results.Ok(appointment);
+
 });
 
 app.Run();

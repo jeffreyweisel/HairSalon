@@ -12,10 +12,19 @@ export const getAppointment = (id) => {
 
 
 // Add new appointment to the system
-export const createAppointment = (stylist) => {
+export const createAppointment = (appointment) => {
     return fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(stylist),
+      body: JSON.stringify(appointment),
     }).then((res) => res.json());
   };
+
+  // Delete an appointment
+  export const cancelAppointment = (id) => {
+    return fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    }).then((res) => res.json());
+  };
+
+  
