@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getCustomer } from "../../data/customerData";
 
