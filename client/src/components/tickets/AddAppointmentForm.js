@@ -21,20 +21,19 @@ export default function AddAppointmentForm() {
 
   const submit = (e) => {
     e.preventDefault();
-  
+
     const newAppointment = {
       customerId,
       stylistId,
-      // Format the date to include seconds and milliseconds
+      // formats date to include seconds and milliseconds
       appointmentTime: new Date(apptDate).toISOString(),
     };
-  
+
     createAppointment(newAppointment).then(() => {
       console.log(newAppointment);
-      navigate('/appointments')
+      navigate("/appointments");
     });
   };
-  
 
   return (
     <div className="container">
@@ -69,11 +68,14 @@ export default function AddAppointmentForm() {
             }}
           >
             <option value="0">Choose a Stylist</option>
-            {stylists.map((s) => (
-              <option value={s.id}>
-                {s.firstName} {s.lastName}
-              </option>
-            ))}
+            {stylists.map(
+              (s) =>
+                s.isActive && (
+                  <option value={s.id}>
+                    {s.firstName} {s.lastName}
+                  </option>
+                )
+            )}
           </Input>
         </FormGroup>
         <FormGroup>

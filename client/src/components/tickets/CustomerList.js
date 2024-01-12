@@ -3,7 +3,6 @@ import { Card, CardBody, CardText, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getCustomers } from "../../data/customerData";
 
-
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
 
@@ -14,22 +13,22 @@ export default function CustomerList() {
   return (
     <div className="container">
       <div className="sub-menu bg-light d-flex">
-      <div>
-        <h4>Customers</h4>
+        <div>
+          <h4>Customers</h4>
+        </div>
+        <Link to="/customers/create" className="ml-2">
+          Add
+        </Link>
       </div>
-      <Link to="/customers/create" className="ml-2">
-        Add
-      </Link>
-    </div>
       {customers.map((customer) => (
         <Card key={`customer-${customer.id}`} className="mb-3">
           <CardBody>
-          <CardTitle tag="h5">
-            {customer.firstName} {customer.lastName}{' '}
-            <small className="text-muted">
-              <Link to={`${customer.id}`}>Details</Link>
-            </small>
-          </CardTitle>
+            <CardTitle tag="h5">
+              {customer.firstName} {customer.lastName}{" "}
+              <small className="text-muted">
+                <Link to={`${customer.id}`}>Details</Link>
+              </small>
+            </CardTitle>
             <CardText>
               <strong>Email:</strong> {customer.email} <br />
               <strong>Address:</strong> {customer.address} <br />

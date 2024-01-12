@@ -3,7 +3,11 @@ import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
 import { cancelAppointment, getAppointments } from "../../data/appointmentData";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faDollarSign, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDollarSign,
+  faTimes,
+  faCalendarDays,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
@@ -18,23 +22,43 @@ export default function AppointmentList() {
     const updatedAppts = await getAppointments();
     setAppointments(updatedAppts);
   };
-  
+
+  const formatDateTime = (dateTimeString) => {
+    const options = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
+      new Date(dateTimeString)
+    );
+    return formattedDate;
+  };
+
   return (
     <div className="container">
-       <div className="sub-menu bg-light d-flex">
-      <div>
-        <h4>Appointments</h4>
+      <div className="sub-menu bg-light d-flex">
+        <div>
+          <h4>Appointments</h4>
+        </div>
+        <Link to="/appointments/create" className="ml-2">
+          Add
+        </Link>
       </div>
-      <Link to="/appointments/create" className="ml-2">
-        Add
-      </Link>
-    </div>
       {appointments.map((appointment) => (
         <Card key={`appointment-${appointment.id}`} className="mb-3">
           <CardBody>
-            <CardTitle tag="h5">Appointment {appointment.id} {" "}
-            <small className="text-muted">
-                <Link to={`${appointment.id}`}>Details</Link>
+            <CardTitle tag="h5">
+              {" "}
+              <strong>
+                <FontAwesomeIcon icon={faCalendarDays} />
+              </strong>{" "}
+              {formatDateTime(appointment.appointmentTime)}{" "}
+              <small className="text-muted">
+                <Link to={`${appointment.id}`}>Modify</Link>
               </small>
             </CardTitle>
             <CardText>
@@ -47,23 +71,24 @@ export default function AppointmentList() {
               <strong>Service Requested: </strong>
               {appointment.services.map((service) => (
                 <span key={`service-${service.id}`}>
-                  {service.service.name}
                   <br />
+                  {service.service.name}
                 </span>
               ))}
-              <strong><FontAwesomeIcon icon={faClock} /></strong> {appointment.appointmentTime}
-
               <br />
-              <strong><FontAwesomeIcon icon={faDollarSign} /></strong> {appointment.appointmentPrice}
+              <strong>
+                <FontAwesomeIcon icon={faDollarSign} />
+              </strong>{" "}
+              {appointment.appointmentPrice}
               <br />
               <Button
-                  size="sm"
-                  color="secondary"
-                  className="mt-2"
-                  onClick={() => handleCancelButtonClick(appointment.id)}
-                >
-                  <FontAwesomeIcon icon={faTimes} /> Cancel Appointment
-                </Button>
+                size="sm"
+                color="secondary"
+                className="mt-2"
+                onClick={() => handleCancelButtonClick(appointment.id)}
+              >
+                <FontAwesomeIcon icon={faTimes} /> Cancel Appointment
+              </Button>
             </CardText>
           </CardBody>
         </Card>

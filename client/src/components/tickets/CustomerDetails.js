@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getCustomer } from "../../data/customerData";
 
-
 export default function CustomerDetails() {
   const { id } = useParams();
   const [customer, setCustomer] = useState(null);
@@ -31,8 +30,7 @@ export default function CustomerDetails() {
             <th scope="row">Address</th>
             <td>{customer.address}</td>
           </tr>
-          <tr>
-          </tr>
+          <tr></tr>
         </tbody>
       </Table>
       <h5>Scheduled Appointments</h5>
@@ -48,7 +46,9 @@ export default function CustomerDetails() {
           <tbody>
             {customer.appointments.map((a) => (
               <tr key={`appointment-${a.id}`}>
-                <td>{a.stylist.firstName} {a.stylist.lastName}</td>
+                <td>
+                  {a.stylist.firstName} {a.stylist.lastName}
+                </td>
                 <td>
                   {a.services.map((service) => (
                     <span key={`service-${service.id}`}>

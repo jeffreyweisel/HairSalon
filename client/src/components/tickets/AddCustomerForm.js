@@ -10,14 +10,13 @@ export default function AddCustomerForm() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
-  
 
   const submit = () => {
     const newCustomer = {
       firstName,
       lastName,
       email,
-      address
+      address,
     };
 
     addCustomer(newCustomer).then(() => {

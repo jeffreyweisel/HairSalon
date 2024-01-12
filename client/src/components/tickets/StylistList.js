@@ -22,13 +22,13 @@ export default function StylistList() {
   return (
     <div className="container">
       <div className="sub-menu bg-light d-flex">
-      <div>
-        <h4>Stylists</h4>
+        <div>
+          <h4>Stylists</h4>
+        </div>
+        <Link to="/stylists/create" className="ml-2">
+          Add
+        </Link>
       </div>
-      <Link to="/stylists/create" className="ml-2">
-        Add
-      </Link>
-    </div>
       {stylists.map((stylist) => (
         <Card key={`stylist-${stylist.id}`} className="mb-3">
           <CardBody>
